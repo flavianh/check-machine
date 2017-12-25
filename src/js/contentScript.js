@@ -1,5 +1,8 @@
 import "../css/contentScript.css";
 
+import chrono from 'chrono-node'
+import moment from 'moment'
+
 $(document.body).bind('mouseup', function(e){
     let selection;
 
@@ -12,12 +15,17 @@ $(document.body).bind('mouseup', function(e){
     let selectionString = selection.toString()
 
     if (selectionString !== '' && confirm(selectionString)) {
-        window.open('https://calendar.google.com/calendar/r/eventedit?' + $.param({
-            dates: '20141106T120000Z/20141106T120000Z',
-            details: '',
-            location: '',
-            text: selectionString,
-            trp: false,
-        }), '_blank');
+        const parsedDate = chrono.parseDate(selectionString);
+
+        if (parsedDate) {
+            const dates = moment(parsedDate).format('YMDTHmmss[Z]') + '/' + moment(parsedDate).add(30, 'minutes').format('YMDTHmmss[Z]')
+            window.open('https://calendar.google.com/calendar/r/eventedit?' + $.param({
+                dates,
+                details: '',
+                location: '',
+                text: selectionString,
+                trp: false,
+            }), '_blank');
+        }
     }
 });
