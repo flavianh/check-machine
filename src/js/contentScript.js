@@ -12,6 +12,12 @@ $(document.body).bind('mouseup', function(e){
     let selectionString = selection.toString()
 
     if (selectionString !== '' && confirm(selectionString)) {
-        window.open('https://calendar.google.com/calendar/r/eventedit?dates=20141106T120000Z/20141106T120000Z&details&location&text=PRP+Due&trp=false', '_blank');
+        window.open('https://calendar.google.com/calendar/r/eventedit?' + $.param({
+            dates: '20141106T120000Z/20141106T120000Z',
+            details: '',
+            location: '',
+            text: selectionString,
+            trp: false,
+        }), '_blank');
     }
 });
