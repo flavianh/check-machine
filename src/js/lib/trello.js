@@ -258,7 +258,7 @@ wrapper = function(window, jQuery, opts) {
   };
   localStorage = window.localStorage;
   if (localStorage != null) {
-    storagePrefix = "ta_dir_trello_";
+    storagePrefix = "check_machine_trello_";
     readStorage = function(key) {
       return localStorage[storagePrefix + key];
     };
