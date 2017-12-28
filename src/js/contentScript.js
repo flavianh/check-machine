@@ -39,13 +39,13 @@ $(document.body).bind('mouseup', async (e) => {
                     console.log(err);
                 });
 
-            window.open('https://calendar.google.com/calendar/r/eventedit?' + $.param({
-                dates,
-                details: '',
-                location: '',
-                text: selectionString,
-                trp: false,
-            }), '_blank');
+            // window.open('https://calendar.google.com/calendar/r/eventedit?' + $.param({
+            //     dates,
+            //     details: '',
+            //     location: '',
+            //     text: selectionString,
+            //     trp: false,
+            // }), '_blank');
         }
     }
 });
