@@ -7,7 +7,7 @@
     "start": "node utils/webserver.js"
   },
   "dependencies": {
-    "chrono-node": "^1.3.5",
+    "chrono-node": "git+ssh://git@github.com:wanasit/chrono.git",
     "html-webpack-plugin": "2.24.1",
     "jquery": "^3.2.1",
     "lodash": "^4.17.4",

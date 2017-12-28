@@ -18,12 +18,20 @@ $(document.body).bind('mouseup', async (e) => {
 
     let selectionString = selection.toString()
 
-    if (selectionString !== '' && confirm(selectionString)) {
-        const parsedDate = chrono.parseDate(selectionString);
+    if (selectionString !== '') {
+        let parsedDate = chrono.parseDate(selectionString, new Date(), {forwardDate: true});
 
         if (parsedDate) {
-            const dates = moment(parsedDate).format('YMDTHmmss[Z]') + '/' + moment(parsedDate).add(30, 'minutes').format('YMDTHmmss[Z]')
+            parsedDate = moment(parsedDate)
+            const dates = parsedDate.format('YMDTHmmss[Z]') + '/' + parsedDate.add(30, 'minutes').format('YMDTHmmss[Z]')
             const key = '300140c4a5500bad38c27a4844d7355c';
+
+            chrome.runtime.sendMessage({
+                type: 'basic',
+                iconUrl: 'icon-34.png',
+                title: 'Sent to Trello list',
+                message: `with due date set to ${parsedDate.format('LLL')}`
+            });
 
             request
                 .post('https://api.trello.com/1/cards')
@@ -35,9 +43,7 @@ $(document.body).bind('mouseup', async (e) => {
                     idList: '57fe251b191208b9390ace4c',
                     due: parsedDate.toString()
                 })
-                .end((err, res) => {
-                    console.log(err);
-                });
+                .end();
 
             // window.open('https://calendar.google.com/calendar/r/eventedit?' + $.param({
             //     dates,

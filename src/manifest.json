@@ -2,7 +2,7 @@
   "name": "Check Machine",
   "options_page": "options.html",
   "background": {
-    "page": "background.html"
+    "scripts": ["background.bundle.js"]
   },
   "browser_action": {
     "default_popup": "popup.html",
@@ -12,13 +12,17 @@
     "128": "icon-128.png"
   },
   "permissions": [
-    "storage"
+    "storage",
+    "notifications"
   ],
   "content_scripts": [
     {
       "matches": ["https://*.facebook.com/*"],
       "js": ["contentScript.bundle.js"]
     }
+  ],
+  "web_accessible_resources": [
+    "icon-34.png"
   ],
   "manifest_version": 2,
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
