@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from 'material-ui/Button';
 import styled from 'styled-components';
+import storageGet from '../services/storage'
 
 import _ from 'lodash'
 import '../lib/trello'
@@ -17,11 +18,8 @@ class Authorize extends React.Component {
   constructor(props) {
     super(props);
 
-    const isAuthenticated =
-      window.localStorage.getItem('user_trello_token') !== null;
-
     this.state = {
-      isAuthenticated,
+      isAuthenticated: false,
     };
   }
 
@@ -40,14 +38,20 @@ class Authorize extends React.Component {
     });
   }
 
-  componentWillMount() {
-    if (this.state.isAuthenticated) {
-      const token = window.localStorage.getItem('user_trello_token');
-      window.Trello.setToken(token);
-    } else if (_.startsWith(window.location.hash, '#token=')) {
+  async componentWillMount() {
+    if (_.startsWith(window.location.hash, '#token=')) {
       let token = _.split(window.location.hash, '=', 2)[1]
       this.setState({
-        isAuthenticated: true
+        isAuthenticated: true,
+      });
+      window.Trello.setToken(token);
+      chrome.storage.sync.set({
+          trello_token: token,
+      });
+    } else {
+      const token = await storageGet('trello_token')
+      this.setState({
+        isAuthenticated: !_.isEmpty(token),
       });
       window.Trello.setToken(token);
     }

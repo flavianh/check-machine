@@ -16,7 +16,8 @@
     "moment": "^2.20.1",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
-    "styled-components": "^2.4.0"
+    "styled-components": "^2.4.0",
+    "superagent": "^3.8.2"
   },
   "devDependencies": {
     "babel-core": "^6.17.0",
